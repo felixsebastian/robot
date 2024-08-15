@@ -1,9 +1,9 @@
-import { GridMovementFileBasedIO } from "./io/GridMovementFileBasedIO";
+import { ParsedLineIO } from "./io/ParsedLineIO";
 import { GridMovementCommandParser } from "./commands/GridMovementCommandParser";
 
 async function main() {
   const parser = new GridMovementCommandParser();
-  const io = new GridMovementFileBasedIO(process.stdin, parser);
+  const io = new ParsedLineIO(process.stdin, parser);
   let result = "";
 
   for await (const command of io) {

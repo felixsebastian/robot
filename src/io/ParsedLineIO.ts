@@ -5,7 +5,7 @@ interface Parser<C> {
   parseLine: (line: string) => C;
 }
 
-export class GridMovementFileBasedIO<C> implements AsyncIterable<C> {
+export class ParsedLineIO<C> implements AsyncIterable<C> {
   private rl: readline.Interface;
   private lineIterator: AsyncIterableIterator<string>;
 

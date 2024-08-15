@@ -6,10 +6,10 @@ import {
   Turn,
 } from "../commands/GridMovementCommand";
 import { GridMovementCommandParser } from "../commands/GridMovementCommandParser";
-import { GridMovementFileBasedIO } from "./GridMovementFileBasedIO";
+import { ParsedLineIO } from "./ParsedLineIO";
 import { Readable } from "stream";
 
-describe("GridMovementFileBasedIO", () => {
+describe("ParsedLineIO", () => {
   const createMockStream = (data: string[]): Readable => {
     const mockStream = new Readable({
       read() {
@@ -33,10 +33,7 @@ describe("GridMovementFileBasedIO", () => {
 
     const mockStream = createMockStream(mockData);
 
-    const io = new GridMovementFileBasedIO(
-      mockStream,
-      new GridMovementCommandParser()
-    );
+    const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
 
     const commands: GridMovementCommand[] = [];
 
@@ -64,10 +61,7 @@ describe("GridMovementFileBasedIO", () => {
   it.skip("should handle an empty stream", async () => {
     const mockStream = createMockStream([]);
 
-    const io = new GridMovementFileBasedIO(
-      mockStream,
-      new GridMovementCommandParser()
-    );
+    const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
 
     const commands: GridMovementCommand[] = [];
 
@@ -83,10 +77,7 @@ describe("GridMovementFileBasedIO", () => {
 
     const mockStream = createMockStream(mockData);
 
-    const io = new GridMovementFileBasedIO(
-      mockStream,
-      new GridMovementCommandParser()
-    );
+    const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
 
     const commands: GridMovementCommand[] = [];
 
