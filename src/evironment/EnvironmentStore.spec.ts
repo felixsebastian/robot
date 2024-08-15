@@ -1,5 +1,5 @@
-import { CartesianBoundary } from "../cartesian/CartesianBoundary";
-import { GridPosition } from "../cartesian/GridPosition";
+import { GridBoundary } from "../grid/GridBoundary";
+import { GridPosition } from "../grid/GridPosition";
 import { EnvironmentStore, PositionError } from "./EnvironmentStore";
 
 class SomeClass {}
@@ -8,7 +8,7 @@ describe("EnvironmentStore", () => {
   let grid: EnvironmentStore<SomeClass, GridPosition>;
 
   beforeEach(() => {
-    grid = new EnvironmentStore(new CartesianBoundary(3, 5));
+    grid = new EnvironmentStore(new GridBoundary(3, 5));
   });
 
   describe("positionIsAvailable", () => {

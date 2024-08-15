@@ -1,4 +1,4 @@
-import { GridPosition } from "./cartesian/GridPosition";
+import { GridPosition } from "./grid/GridPosition";
 import { directions } from "./directions";
 
 export type Direction = (typeof directions)[number];

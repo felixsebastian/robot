@@ -1,4 +1,4 @@
-import { GridPosition } from "../cartesian/GridPosition";
+import { GridPosition } from "../grid/GridPosition";
 import {
   CommandParsingError,
   TurnDirection,

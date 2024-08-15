@@ -1,4 +1,4 @@
-import { GridPosition } from "./cartesian/GridPosition";
+import { GridPosition } from "./grid/GridPosition";
 import { EnvironmentStore } from "./evironment/EnvironmentStore";
 import {
   MoveCommand,
@@ -29,6 +29,7 @@ export class GridGameController {
     switch (true) {
       case command instanceof PlaceCommand:
         const placeCommand = command as PlaceCommand;
+        this.player.facing = placeCommand.facing;
         this.environment.placeObject(this.player, placeCommand.position);
         this.initialized = true;
         break;

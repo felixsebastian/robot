@@ -5,7 +5,7 @@ export class PositionError extends Error {}
 // EnvironmentStore is a kind of hybrid data structure.
 // It is designed to keep track of objects and their positions.
 // It can be used with a boundary which will make some positions invalid.
-// This could be used to keep track of objects in cartesian space, among others.
+// This could be used to keep track of objects in grid space, among others.
 export class EnvironmentStore<O, P extends Serializable> {
   private readonly objectsByPosition: Map<string, O> = new Map();
   private readonly positionsByObject: Map<O, P> = new Map();

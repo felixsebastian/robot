@@ -34,13 +34,14 @@ export class SimpleGridMovement implements GridMovement {
     }
   }
 
+  // Origin is bottom left
   private processMove(position: GridPosition, direction: Direction) {
     if (direction === "NORTH") {
-      return new GridPosition(position.x, position.y - 1);
+      return new GridPosition(position.x, position.y + 1);
     }
 
     if (direction === "SOUTH") {
-      return new GridPosition(position.x, position.y + 1);
+      return new GridPosition(position.x, position.y - 1);
     }
 
     if (direction === "WEST") {

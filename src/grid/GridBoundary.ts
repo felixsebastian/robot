@@ -1,7 +1,7 @@
 import { Boundary } from "../types";
 import { GridPosition } from "./GridPosition";
 
-export class CartesianBoundary implements Boundary<GridPosition> {
+export class GridBoundary implements Boundary<GridPosition> {
   constructor(
     private readonly width: number,
     private readonly height: number
