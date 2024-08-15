@@ -5,10 +5,12 @@ import {
   Place,
   Report,
   Turn,
-} from "./GridMovementCommand";
+} from "../commands/GridMovementCommand";
 
-class FileBasedIOError extends Error {}
+class CommandParsingError extends Error {}
 
+// Parses input quite strictly.
+// Different casing or whitespace will cause errors to be thrown.
 export class GridMovementCommandParser {
   private readonly COMMAND_PATTERNS = [
     { regex: /^MOVE$/, type: "MOVE" } as const,
@@ -37,7 +39,7 @@ export class GridMovementCommandParser {
     }
 
     if (!matchingPattern || !matchArray) {
-      throw new FileBasedIOError(`invalid command found in file: ${line}`);
+      throw new CommandParsingError(`invalid command found in file: ${line}`);
     }
 
     switch (matchingPattern.type) {

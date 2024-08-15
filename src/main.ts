@@ -1,5 +1,5 @@
 import { GridMovementFileBasedIO } from "./io/GridMovementFileBasedIO";
-import { GridMovementCommandParser } from "./io/GridMovementCommandParser";
+import { GridMovementCommandParser } from "./commands/GridMovementCommandParser";
 
 async function main() {
   const parser = new GridMovementCommandParser();

@@ -3,8 +3,9 @@ import {
   Place,
   GridMovementCommand,
   Report,
-} from "./GridMovementCommand";
-import { GridMovementCommandParser } from "./GridMovementCommandParser";
+  Turn,
+} from "../commands/GridMovementCommand";
+import { GridMovementCommandParser } from "../commands/GridMovementCommandParser";
 import { GridMovementFileBasedIO } from "./GridMovementFileBasedIO";
 import { Readable } from "stream";
 
@@ -21,7 +22,15 @@ describe("GridMovementFileBasedIO", () => {
   };
 
   it("should iterate over the commands correctly", async () => {
-    const mockData = ["PLACE 0,0,NORTH", "MOVE", "REPORT"];
+    const mockData = [
+      "PLACE 1,2,EAST",
+      "MOVE",
+      "MOVE",
+      "LEFT",
+      "MOVE",
+      "REPORT",
+    ];
+
     const mockStream = createMockStream(mockData);
 
     const io = new GridMovementFileBasedIO(
@@ -35,13 +44,21 @@ describe("GridMovementFileBasedIO", () => {
       commands.push(command);
     }
 
-    expect(commands).toHaveLength(3);
+    expect(commands).toHaveLength(6);
+
     expect(commands[0]).toBeInstanceOf(Place);
-    expect((commands[0] as Place).position.x).toBe(0);
-    expect((commands[0] as Place).position.y).toBe(0);
-    expect((commands[0] as Place).facing).toBe("NORTH");
+    expect((commands[0] as Place).position.x).toBe(1);
+    expect((commands[0] as Place).position.y).toBe(2);
+    expect((commands[0] as Place).facing).toBe("EAST");
+
     expect(commands[1]).toBeInstanceOf(Move);
-    expect(commands[2]).toBeInstanceOf(Report);
+    expect(commands[2]).toBeInstanceOf(Move);
+
+    expect(commands[3]).toBeInstanceOf(Turn);
+    expect((commands[3] as Turn).direction).toBe("LEFT");
+
+    expect(commands[4]).toBeInstanceOf(Move);
+    expect(commands[5]).toBeInstanceOf(Report);
   });
 
   it.skip("should handle an empty stream", async () => {
