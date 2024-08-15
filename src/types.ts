@@ -12,7 +12,7 @@ export interface GridMovement {
   applyCommand: (
     position: GridPosition,
     direction: Direction,
-    command: GridCommand
+    command: MovementCommand
   ) => GridMovementResult;
 }
 
@@ -35,9 +35,8 @@ export class TurnCommand {
 
 export class MoveCommand {}
 export class ReportCommand {}
-export type SimpleGridMovementCommand = MoveCommand | TurnCommand;
-export type GridCommand = PlaceCommand | SimpleGridMovementCommand;
-export type GameCommand = GridCommand | ReportCommand;
+export type MovementCommand = MoveCommand | TurnCommand;
+export type GameCommand = PlaceCommand | MovementCommand | ReportCommand;
 
 export interface Parser<C> {
   parseLine: (line: string) => C;

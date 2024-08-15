@@ -1,9 +1,9 @@
 import { GridPosition } from "./GridPosition";
 import {
   Direction,
-  GridCommand,
   GridMovement,
   MoveCommand,
+  MovementCommand,
   TurnCommand,
 } from "../types";
 import { directions } from "../directions";
@@ -12,7 +12,7 @@ export class SimpleGridMovement implements GridMovement {
   applyCommand(
     position: GridPosition,
     direction: Direction,
-    command: GridCommand
+    command: MovementCommand
   ) {
     switch (true) {
       case command instanceof MoveCommand:
@@ -21,8 +21,9 @@ export class SimpleGridMovement implements GridMovement {
           direction,
         };
       case command instanceof TurnCommand:
-        const delta = command.direction === "LEFT" ? -1 : 1;
-        const index = directions.indexOf(direction) + delta;
+        const turnCommand = command as TurnCommand;
+        const delta = turnCommand.direction === "LEFT" ? -1 : 1;
+        const index = directions.length + directions.indexOf(direction) + delta;
 
         return {
           direction: directions[index % directions.length],

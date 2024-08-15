@@ -7,24 +7,25 @@ import { EnvironmentStore } from "./evironment/EnvironmentStore";
 import { SimpleGridMovement } from "./cartesian/SimpleGridMovement";
 import { Player } from "./types";
 import { GridPosition } from "./cartesian/GridPosition";
+import { Robot } from "./robot";
 
 async function main() {
   const parser = new GridMovementCommandParser();
-  const io = new ParsedLineIOManager(process.stdin, parser);
+  const commands = new ParsedLineIOManager(process.stdin, parser);
   const boundary = new CartesianBoundary(10, 10);
   const logger = new MemoryLogger();
   const environment = new EnvironmentStore<Player, GridPosition>(boundary);
   const movement = new SimpleGridMovement();
-  const player: Player = { facing: "NORTH" };
+  const robot = new Robot();
 
   const controller = new GridGameController(
     environment,
-    player,
+    robot,
     movement,
     logger
   );
 
-  for await (const command of io) {
+  for await (const command of commands) {
     controller.processCommand(command);
   }
 
