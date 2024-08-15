@@ -1,23 +1,24 @@
+import { GridPosition } from "../cartesian/GridPosition";
 import {
+  CommandParsingError,
+  TurnDirection,
   Direction,
-  Facing,
-  Move,
-  Place,
-  Report,
-  Turn,
-} from "../commands/GridMovementCommand";
+  MoveCommand,
+  PlaceCommand,
+  ReportCommand,
+  TurnCommand,
+} from "../types";
 
-class CommandParsingError extends Error {}
-
+// This class takes string commands and converts them into command objects.
 // Parses input quite strictly.
 // Different casing or whitespace will cause errors to be thrown.
 export class GridMovementCommandParser {
   private readonly COMMAND_PATTERNS = [
-    { regex: /^MOVE$/, type: "MOVE" } as const,
     {
       regex: /^PLACE (\d+),(\d+),(NORTH|SOUTH|EAST|WEST)$/,
       type: "PLACE",
     } as const,
+    { regex: /^MOVE$/, type: "MOVE" } as const,
     { regex: /^LEFT$/, type: "TURN" } as const,
     { regex: /^RIGHT$/, type: "TURN" } as const,
     { regex: /^REPORT$/, type: "REPORT" } as const,
@@ -44,15 +45,18 @@ export class GridMovementCommandParser {
 
     switch (matchingPattern.type) {
       case "MOVE":
-        return new Move();
+        return new MoveCommand();
       case "TURN":
-        return new Turn(matchArray[0] as Direction);
+        return new TurnCommand(matchArray[0] as TurnDirection);
       case "REPORT":
-        return new Report();
+        return new ReportCommand();
       case "PLACE":
-        return new Place(
-          { x: parseInt(matchArray[1], 10), y: parseInt(matchArray[2], 10) },
-          matchArray[3] as Facing
+        return new PlaceCommand(
+          new GridPosition(
+            parseInt(matchArray[1], 10),
+            parseInt(matchArray[2], 10)
+          ),
+          matchArray[3] as Direction
         );
       default:
         const exhaustiveCheck: never = matchingPattern;

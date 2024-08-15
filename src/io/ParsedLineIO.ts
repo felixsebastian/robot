@@ -1,10 +1,9 @@
 import readline from "readline";
 import { Readable } from "stream";
+import { Parser } from "../types";
 
-interface Parser<C> {
-  parseLine: (line: string) => C;
-}
-
+// ParsedLineIO manages input streams processing line-by-line.
+// It allows the caller to iterate over the parsed lines.
 export class ParsedLineIO<C> implements AsyncIterable<C> {
   private rl: readline.Interface;
   private lineIterator: AsyncIterableIterator<string>;

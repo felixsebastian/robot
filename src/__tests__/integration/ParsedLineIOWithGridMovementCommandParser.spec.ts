@@ -1,12 +1,12 @@
 import {
-  Move,
-  Place,
-  GridMovementCommand,
-  Report,
-  Turn,
-} from "../../commands/GridMovementCommand";
+  MoveCommand,
+  PlaceCommand,
+  GridCommand,
+  ReportCommand,
+  TurnCommand,
+} from "../../types";
 import { GridMovementCommandParser } from "../../commands/GridMovementCommandParser";
-import { ParsedLineIO } from "../../ParsedLineIO";
+import { ParsedLineIO } from "../../io/ParsedLineIO";
 import { Readable } from "stream";
 
 describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
@@ -32,7 +32,7 @@ describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
     ]);
 
     const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
-    const commands: GridMovementCommand[] = [];
+    const commands: GridCommand[] = [];
 
     for await (const command of io) {
       commands.push(command);
@@ -40,18 +40,18 @@ describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
 
     expect(commands).toHaveLength(6);
 
-    expect(commands[0]).toBeInstanceOf(Place);
-    expect((commands[0] as Place).position.x).toBe(1);
-    expect((commands[0] as Place).position.y).toBe(2);
-    expect((commands[0] as Place).facing).toBe("EAST");
+    expect(commands[0]).toBeInstanceOf(PlaceCommand);
+    expect((commands[0] as PlaceCommand).position.x).toBe(1);
+    expect((commands[0] as PlaceCommand).position.y).toBe(2);
+    expect((commands[0] as PlaceCommand).facing).toBe("EAST");
 
-    expect(commands[1]).toBeInstanceOf(Move);
-    expect(commands[2]).toBeInstanceOf(Move);
+    expect(commands[1]).toBeInstanceOf(MoveCommand);
+    expect(commands[2]).toBeInstanceOf(MoveCommand);
 
-    expect(commands[3]).toBeInstanceOf(Turn);
-    expect((commands[3] as Turn).direction).toBe("LEFT");
+    expect(commands[3]).toBeInstanceOf(TurnCommand);
+    expect((commands[3] as TurnCommand).direction).toBe("LEFT");
 
-    expect(commands[4]).toBeInstanceOf(Move);
-    expect(commands[5]).toBeInstanceOf(Report);
+    expect(commands[4]).toBeInstanceOf(MoveCommand);
+    expect(commands[5]).toBeInstanceOf(ReportCommand);
   });
 });
