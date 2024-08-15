@@ -1,16 +1,16 @@
-import { ParsedLineIO } from "./io/ParsedLineIO";
-import { GridMovementCommandParser } from "./commands/GridMovementCommandParser";
+import { ParsedLineIOManager } from "./io/ParsedLineIOManager";
+import { GridMovementCommandParser } from "./io/GridMovementCommandParser";
 import { CartesianBoundary } from "./cartesian/CartesianBoundary";
 import { MemoryLogger } from "./io/MemoryLogger";
 import { GridGameController } from "./controller";
 import { EnvironmentStore } from "./evironment/EnvironmentStore";
-import { SimpleGridMovement } from "./movement/SimpleGridMovement";
+import { SimpleGridMovement } from "./cartesian/SimpleGridMovement";
 import { Player } from "./types";
 import { GridPosition } from "./cartesian/GridPosition";
 
 async function main() {
   const parser = new GridMovementCommandParser();
-  const io = new ParsedLineIO(process.stdin, parser);
+  const io = new ParsedLineIOManager(process.stdin, parser);
   const boundary = new CartesianBoundary(10, 10);
   const logger = new MemoryLogger();
   const environment = new EnvironmentStore<Player, GridPosition>(boundary);

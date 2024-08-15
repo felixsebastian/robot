@@ -5,8 +5,8 @@ import {
   ReportCommand,
   TurnCommand,
 } from "../../types";
-import { GridMovementCommandParser } from "../../commands/GridMovementCommandParser";
-import { ParsedLineIO } from "../../io/ParsedLineIO";
+import { GridMovementCommandParser } from "../../io/GridMovementCommandParser";
+import { ParsedLineIOManager } from "../../io/ParsedLineIOManager";
 import { Readable } from "stream";
 
 describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
@@ -31,7 +31,10 @@ describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
       "REPORT",
     ]);
 
-    const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
+    const io = new ParsedLineIOManager(
+      mockStream,
+      new GridMovementCommandParser()
+    );
     const commands: GridCommand[] = [];
 
     for await (const command of io) {

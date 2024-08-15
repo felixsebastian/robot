@@ -1,4 +1,4 @@
-import { ParsedLineIO } from "./ParsedLineIO";
+import { ParsedLineIOManager } from "./ParsedLineIOManager";
 import { Readable } from "stream";
 
 class SimpleError extends Error {}
@@ -25,7 +25,7 @@ describe("ParsedLineIO", () => {
 
   it("should iterate over the commands correctly", async () => {
     const mockStream = createMockStream(["ONE", "TWO"]);
-    const io = new ParsedLineIO(mockStream, new SimpleParser());
+    const io = new ParsedLineIOManager(mockStream, new SimpleParser());
     const commands: number[] = [];
 
     for await (const command of io) {
@@ -39,7 +39,7 @@ describe("ParsedLineIO", () => {
 
   it("should handle an empty stream", async () => {
     const mockStream = createMockStream([]);
-    const io = new ParsedLineIO(mockStream, new SimpleParser());
+    const io = new ParsedLineIOManager(mockStream, new SimpleParser());
     const commands: number[] = [];
 
     for await (const command of io) {
@@ -51,7 +51,7 @@ describe("ParsedLineIO", () => {
 
   it("should throw an error for invalid commands", async () => {
     const mockStream = createMockStream(["FIVE"]);
-    const io = new ParsedLineIO(mockStream, new SimpleParser());
+    const io = new ParsedLineIOManager(mockStream, new SimpleParser());
 
     await expect(async () => {
       for await (const command of io) {

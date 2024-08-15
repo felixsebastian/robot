@@ -3,8 +3,17 @@ import { directions } from "./directions";
 
 export type Direction = (typeof directions)[number];
 
+interface GridMovementResult {
+  position: GridPosition;
+  direction: Direction;
+}
+
 export interface GridMovement {
-  applyCommand: (position: GridPosition, command: GridCommand) => GridPosition;
+  applyCommand: (
+    position: GridPosition,
+    direction: Direction,
+    command: GridCommand
+  ) => GridMovementResult;
 }
 
 export interface Player {

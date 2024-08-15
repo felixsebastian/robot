@@ -4,7 +4,7 @@ import { Parser } from "../types";
 
 // ParsedLineIO manages input streams processing line-by-line.
 // It allows the caller to iterate over the parsed lines.
-export class ParsedLineIO<C> implements AsyncIterable<C> {
+export class ParsedLineIOManager<C> implements AsyncIterable<C> {
   private rl: readline.Interface;
   private lineIterator: AsyncIterableIterator<string>;
 

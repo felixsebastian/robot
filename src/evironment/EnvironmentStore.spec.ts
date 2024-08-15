@@ -1,4 +1,5 @@
-import { CartesianBoundary, GridPosition } from "../cartesian";
+import { CartesianBoundary } from "../cartesian/CartesianBoundary";
+import { GridPosition } from "../cartesian/GridPosition";
 import { EnvironmentStore, PositionError } from "./EnvironmentStore";
 
 class SomeClass {}
