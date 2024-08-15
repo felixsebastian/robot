@@ -1,4 +1,4 @@
-import { ParsedLineIO } from "./io/ParsedLineIO";
+import { ParsedLineIO } from "./ParsedLineIO";
 import { GridMovementCommandParser } from "./commands/GridMovementCommandParser";
 
 async function main() {

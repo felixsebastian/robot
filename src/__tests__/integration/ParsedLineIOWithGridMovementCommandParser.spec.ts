@@ -4,12 +4,12 @@ import {
   GridMovementCommand,
   Report,
   Turn,
-} from "../commands/GridMovementCommand";
-import { GridMovementCommandParser } from "../commands/GridMovementCommandParser";
-import { ParsedLineIO } from "./ParsedLineIO";
+} from "../../commands/GridMovementCommand";
+import { GridMovementCommandParser } from "../../commands/GridMovementCommandParser";
+import { ParsedLineIO } from "../../ParsedLineIO";
 import { Readable } from "stream";
 
-describe("ParsedLineIO", () => {
+describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
   const createMockStream = (data: string[]): Readable => {
     const mockStream = new Readable({
       read() {
@@ -22,19 +22,16 @@ describe("ParsedLineIO", () => {
   };
 
   it("should iterate over the commands correctly", async () => {
-    const mockData = [
+    const mockStream = createMockStream([
       "PLACE 1,2,EAST",
       "MOVE",
       "MOVE",
       "LEFT",
       "MOVE",
       "REPORT",
-    ];
-
-    const mockStream = createMockStream(mockData);
+    ]);
 
     const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
-
     const commands: GridMovementCommand[] = [];
 
     for await (const command of io) {
@@ -56,35 +53,5 @@ describe("ParsedLineIO", () => {
 
     expect(commands[4]).toBeInstanceOf(Move);
     expect(commands[5]).toBeInstanceOf(Report);
-  });
-
-  it.skip("should handle an empty stream", async () => {
-    const mockStream = createMockStream([]);
-
-    const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
-
-    const commands: GridMovementCommand[] = [];
-
-    for await (const command of io) {
-      commands.push(command);
-    }
-
-    expect(commands).toHaveLength(0);
-  });
-
-  it.skip("should throw an error for invalid commands", async () => {
-    const mockData = ["SOME_INVALID_COMMAND"];
-
-    const mockStream = createMockStream(mockData);
-
-    const io = new ParsedLineIO(mockStream, new GridMovementCommandParser());
-
-    const commands: GridMovementCommand[] = [];
-
-    await expect(async () => {
-      for await (const command of io) {
-        commands.push(command);
-      }
-    }).rejects.toThrow(SyntaxError);
   });
 });
