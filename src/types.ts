@@ -55,3 +55,5 @@ export interface Boundary<P> {
 export interface Logger {
   log: (text: string) => void;
 }
+
+export class PositionError extends Error {}

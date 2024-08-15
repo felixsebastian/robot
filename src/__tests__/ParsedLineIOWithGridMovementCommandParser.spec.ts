@@ -4,10 +4,10 @@ import {
   PlaceCommand,
   ReportCommand,
   TurnCommand,
-} from "../../types";
-import { ParsedLineIOManager } from "../../io/ParsedLineIOManager";
+} from "../types";
+import { ParsedLineIOManager } from "../io/ParsedLineIOManager";
 import { Readable } from "stream";
-import { GridMovementCommandParser } from "../../grid/GridMovementCommandParser";
+import { GridMovementCommandParser } from "../grid/GridMovementCommandParser";
 
 describe("Integration: ParsedLineIO with GridMovementCommandParser", () => {
   const createMockStream = (data: string[]): Readable => {

@@ -9,6 +9,7 @@ import {
   Logger,
   GameCommand,
   ReportCommand,
+  MovementCommand,
 } from "./types";
 
 // The main purpose of the controller is to route commands to the right object.
@@ -24,31 +25,49 @@ export class GridGameController {
 
   processCommand(command: GameCommand) {
     if (!this.initialized && !(command instanceof PlaceCommand)) return;
-    const { facing } = this.player;
 
     switch (true) {
       case command instanceof PlaceCommand:
-        const placeCommand = command as PlaceCommand;
-        this.player.facing = placeCommand.facing;
-        this.environment.placeObject(this.player, placeCommand.position);
-        this.initialized = true;
+        this.applyPlaceCommand(command as PlaceCommand);
         break;
       case command instanceof MoveCommand:
       case command instanceof TurnCommand:
-        const currentPosition = this.environment.getObjectPosition(this.player);
-
-        const result = this.movement.applyCommand(
-          currentPosition,
-          facing,
-          command
-        );
-
-        this.environment.moveObject(this.player, result.position);
-        this.player.facing = result.direction;
+        this.applyMovementCommands(command as MovementCommand);
         break;
       case command instanceof ReportCommand:
         const { x, y } = this.environment.getObjectPosition(this.player);
         this.logger.log(`${x},${y},${this.player.facing}`);
     }
+  }
+
+  applyPlaceCommand({ facing, position }: PlaceCommand) {
+    this.player.facing = facing;
+
+    if (this.environment.positionIsAvailable(position)) {
+      this.environment.placeObject(this.player, position);
+    } else {
+      this.logger.log("Cannot go there!");
+    }
+
+    this.initialized = true;
+  }
+
+  applyMovementCommands(command: MovementCommand) {
+    const { facing } = this.player;
+    const currentPosition = this.environment.getObjectPosition(this.player);
+
+    const { position, direction } = this.movement.applyCommand(
+      currentPosition,
+      facing,
+      command
+    );
+
+    if (this.environment.positionIsAvailable(position)) {
+      this.environment.moveObject(this.player, position);
+    } else if (command instanceof MoveCommand) {
+      this.logger.log("Cannot go there!");
+    }
+
+    this.player.facing = direction;
   }
 }

@@ -1,6 +1,4 @@
-import { Boundary, Serializable } from "../types";
-
-export class PositionError extends Error {}
+import { Boundary, PositionError, Serializable } from "../types";
 
 // EnvironmentStore is a kind of hybrid data structure.
 // It is designed to keep track of objects and their positions.

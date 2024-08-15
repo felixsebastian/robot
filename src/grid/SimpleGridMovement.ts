@@ -21,8 +21,7 @@ export class SimpleGridMovement implements GridMovement {
           direction,
         };
       case command instanceof TurnCommand:
-        const turnCommand = command as TurnCommand;
-        const delta = turnCommand.direction === "LEFT" ? -1 : 1;
+        const delta = (command as TurnCommand).direction === "LEFT" ? -1 : 1;
         const index = directions.length + directions.indexOf(direction) + delta;
 
         return {
