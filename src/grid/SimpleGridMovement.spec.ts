@@ -14,7 +14,7 @@ describe("SimpleGridMovement", () => {
       );
 
       expect(result.position.serialize()).toBe(
-        new GridPosition(2, 1).serialize()
+        new GridPosition(2, 3).serialize()
       );
 
       expect(result.direction).toBe("NORTH");
@@ -28,7 +28,7 @@ describe("SimpleGridMovement", () => {
       );
 
       expect(result.position.serialize()).toBe(
-        new GridPosition(2, 3).serialize()
+        new GridPosition(2, 1).serialize()
       );
 
       expect(result.direction).toBe("SOUTH");
