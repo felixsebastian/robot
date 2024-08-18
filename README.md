@@ -12,7 +12,7 @@ By default the program will wait for your input and allow you to type in command
 
 ## Notes about the design
 
-If you look at the main.ts file you will see that the whole program is highly decoupled. One of the main cross-cutting concerns is the concept of a 2d cartesian grid. I've taken extra care to make sure this could easily be switched out with any positioning system, such as a hexagonal grid, or 3d space. Only the parts of the program which need to be grid-aware are so, and live in the ./src/grid directory.
+If you look at the `main.ts` file you will see that the whole program is highly decoupled. One of the main cross-cutting concerns is the concept of a 2d cartesian grid. I've taken extra care to make sure this could easily be switched out with any positioning system, such as a hexagonal grid, or 3d space. Only the parts of the program which need to be grid-aware are so, and live in the `./src/grid` directory.
 
 Similarly for IO. This program comes with a CliLineReader class, which reads lines from the CLI, and a FileLineReader which reads from files. But you can easily pass any ReadStream compatible object such as stdin to the IOManager.
 
@@ -20,7 +20,17 @@ With these 2 main concerns nicely decoupled and abstracted away, the only thing 
 
 I would have liked to spend a bit more time thinking about folder structure and code organisation, but alas I am too busy. I also would've liked to spend more time writing integration tests.
 
-In terms of cohesion, the main classes doing most of the work in this program are GridMovementCommandParser, SimpleGridMovement and GridGameController. These classes have quite small APIs and are very cohesive.
+In terms of cohesion, the main classes doing most of the work in this program are `GridMovementCommandParser`, `SimpleGridMovement` and `GridGameController`. These classes have quite small APIs and are very cohesive.
+
+Something I like about this program is the `ParsedLineIOManager`. It's quite unnecessary but it makes this code possible:
+
+```ts
+for await (const command of commands) {
+  controller.processCommand(command);
+}
+```
+
+Where commands is not an array but an instance of `ParsedLineIOManager` which is lazily parsing each line and creating a command object. I like this quite a lot.
 
 ## Performance
 
