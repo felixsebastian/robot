@@ -10,4 +10,4 @@ Run the tests with `npm run test`.
 
 ## Notes about the design
 
-If you look at the main.ts file you will see that the whole program is highly decoupled. One of the main cross-cutting concerns is the concept of a 2d cartesian grid. I've taken extra care to make sure this could easily be switched out with any positioning system, such as a hexagonal grid, or 3d space.
+If you look at the main.ts file you will see that the whole program is highly decoupled. One of the main cross-cutting concerns is the concept of a 2d cartesian grid. I've taken extra care to make sure this could easily be switched out with any positioning system, such as a hexagonal grid, or 3d space. Similarly for IO. This program comes with a CliLineReader class, which reads lines from the CLI. But you can easily pass any ReadStream compatible object such as stdin to the IOManager.
