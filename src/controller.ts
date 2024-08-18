@@ -41,15 +41,13 @@ export class GridGameController {
   }
 
   private applyPlaceCommand({ facing, position }: PlaceCommand) {
-    this.player.facing = facing;
-
     if (this.environment.positionIsAvailable(position)) {
       this.environment.placeObject(this.player, position);
+      this.player.facing = facing;
+      this.initialized = true;
     } else {
       this.logger.log("Cannot go there!");
     }
-
-    this.initialized = true;
   }
 
   private applyMovementCommands(command: MovementCommand) {
