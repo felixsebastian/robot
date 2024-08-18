@@ -1,6 +1,7 @@
 import { GridBoundary } from "../grid/GridBoundary";
 import { GridPosition } from "../grid/GridPosition";
-import { EnvironmentStore, PositionError } from "./EnvironmentStore";
+import { PositionError } from "../types";
+import { EnvironmentStore } from "./EnvironmentStore";
 
 class SomeClass {}
 
