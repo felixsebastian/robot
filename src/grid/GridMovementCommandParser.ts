@@ -40,7 +40,7 @@ export class GridMovementCommandParser {
     }
 
     if (!matchingPattern || !matchArray) {
-      throw new CommandParsingError(`invalid command found in file: ${line}`);
+      throw new CommandParsingError(`invalid command: ${line}`);
     }
 
     switch (matchingPattern.type) {

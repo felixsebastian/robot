@@ -9,12 +9,24 @@ import { GridPosition } from "./grid/GridPosition";
 import { Robot } from "./robot";
 import { CliLineReader } from "./io/CliLineReader";
 import { ConsoleLogger } from "./io/ConsoleLogger";
+import { FileLineReader } from "./io/FileLineReader";
+import { join } from "path";
+import { Readable } from "stream";
 
 async function main() {
+  const filename = process.argv[2];
   const parser = new GridMovementCommandParser();
   const logger = new ConsoleLogger();
-  const cliReader = new CliLineReader(logger);
-  const commands = new ParsedLineIOManager(cliReader, parser, logger);
+
+  let reader: Readable;
+
+  if (filename) {
+    reader = new FileLineReader(join(__dirname, "..", "data", filename));
+  } else {
+    reader = new CliLineReader(logger);
+  }
+
+  const commands = new ParsedLineIOManager(reader, parser, logger);
   const boundary = new GridBoundary(5, 5);
   const environment = new EnvironmentStore<Player, GridPosition>(boundary);
   const movement = new SimpleGridMovement();
