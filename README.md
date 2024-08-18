@@ -15,3 +15,5 @@ Similarly for IO. This program comes with a CliLineReader class, which reads lin
 With these 2 main concerns nicely decoupled and abstracted away, the only thing that remains is keeping track of which direction the player is facing. This is not inherently tied to the grid concept. This bit lives in the controller, it's basically 1 line of code. I would say it almost deserves its own class.
 
 I would have liked to spend a bit more time thinking about folder structure and code organisation, but alas I am too busy.
+
+I also would've liked to spend more time writing integration tests.
