@@ -1,12 +1,12 @@
 import { GridPosition } from "./GridPosition";
 import {
+  directions,
   Direction,
   GridMovement,
   MoveCommand,
   MovementCommand,
   TurnCommand,
 } from "../types";
-import { directions } from "../directions";
 
 export class SimpleGridMovement implements GridMovement {
   applyCommand(
