@@ -40,7 +40,7 @@ export class GridGameController {
     }
   }
 
-  applyPlaceCommand({ facing, position }: PlaceCommand) {
+  private applyPlaceCommand({ facing, position }: PlaceCommand) {
     this.player.facing = facing;
 
     if (this.environment.positionIsAvailable(position)) {
@@ -52,7 +52,7 @@ export class GridGameController {
     this.initialized = true;
   }
 
-  applyMovementCommands(command: MovementCommand) {
+  private applyMovementCommands(command: MovementCommand) {
     const { facing } = this.player;
     const currentPosition = this.environment.getObjectPosition(this.player);
 
